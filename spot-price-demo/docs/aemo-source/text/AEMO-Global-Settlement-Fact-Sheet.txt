@@ -1,0 +1,122 @@
+What is Global
+Settlement?
+
+This factsheet provides an overview of what Global Settlement is and how AEMO is
+implementing this change. The factsheet is high-level and generic. Other fact sheets explain
+specific topics in the 5-Minute Settlement (5MS) and Global Settlement Program.
+
+
+Current settlement                                                            Effectively, this means all retailers are settled in the
+arrangements                                                                  same way.
+                                                                              On 6 December 2018, the Australian Energy Market
+AEMO is responsible for settlement in the National
+                                                                              Commission (AEMC), the rule-maker for the NEM,
+Electricity Market (NEM) – making sure market
+                                                                              passed a final rule to implement Global Settlement1
+generators are paid for the energy they provide,
+                                                                              across the NEM.
+and retailers pay for the energy their customers
+use.
+The wholesale market is currently settled through
+                                                                              Which participants are
+the settlement-by-difference methodology, which                               impacted by Global
+has been in place since the start of the NEM in
+                                                                              Settlement?
+1998. This arrangement allowed the market to
+operate without the need for an expensive and                                 The main impact will be on Market Customers
+impractical upgrade to metering of all customers.                             (electricity retailers), Meter Data Providers,
+However, it entrenches different treatment of                                 Distribution Businesses and AEMO.
+retailers: those that were incumbent at the start of
+the market (referred to as Local Retailers) and those
+                                                                              What are the benefits of Global
+retailers that have subsequently entered the
+market.                                                                       Settlement?
+Since market start there have been significant                                Global Settlement will mean that AEMO settles the
+changes in metering, with the roll-out of smart                               market using the same process for all retailers. This
+meters and advances in communication                                          will provide a greater level of visibility of energy
+technology. There are also a significant number of                            uncertainties, known as Unaccounted for Energy
+customers that have changed retailers, and the                                (UFE). There are many sources of UFE, some
+concept of the Local Retailer is no longer necessary                          examples include electrical losses, unmetered loads
+in many jurisdictions.                                                        and estimation errors.
+                                                                              The process is also expected to lead to fewer
+What is Global Settlement?                                                    settlement disputes because of the improved ability
+
+Global Settlement is an alternative methodology to
+settlement-by-difference, in which there is no need
+for a Local Retailer.
+
+
+
+1
+    Information on the rule change and the AEMC’s deliberations can be found at: https://www.aemc.gov.au/rule-changes/global-settlement-and-market-
+     reconciliation.
+
+
+
+© AEMO 2020 | Factsheet: What is Global Settlement?                                                                                                   1
+to identify metering errors, and will assist in other             various change programs in the NEM, and has
+areas such as forecasting and the management of                   strategies in place to deal with both these issues.
+distributed energy resources.
+Global Settlement will also create an incentive for               Which procedures are impacted
+the industry to reduce UFE, such as by rolling out
+smart metering or reviewing unmetered                             by Global Settlement?
+connections.                                                      Metering and settlements procedures will be
+                                                                  affected by global settlement. As part of the
+What is AEMO’s role in the Rule                                   procedure change work required for 5MS, AEMO
+                                                                  will also update relevant procedures in-line with
+change?                                                           Global Settlement, and develop new procedures if
+On March 2018, AEMO submitted a formal Rule                       necessary.
+change request to the AEMC, proposing a Global
+Settlement framework across the NEM.                              Which AEMO systems will be
+                                                                  impacted by Global
+How will AEMO implement
+                                                                  Settlement?
+Global Settlement?
+                                                                  The main impact will be to AEMO’s retail systems
+As well as updating procedures, AEMO is also                      (MSATS). This includes:
+responsible for implementing the Rule by updating
+                                                                  • Determination and publication of UFE
+any relevant processes and systems to support
+market readiness for Global Settlement.                           • Changing the settlement processes to global
+                                                                    settlement instead of settlement by difference.
+AEMO will be integrating the implementation of
+Global Settlement into the current 5MS
+implementation program. Many systems and                          When will Global Settlement
+processes are impacted by both these changes, so
+                                                                  come into effect?
+it makes sense for them to be implemented in
+parallel.                                                         Global Settlement will begin on 1 May 2022.
+                                                                  However, UFE data will be published by AEMO from
+AEMO intends to consult on all aspects of the
+                                                                  1 October 2021 to ease the transition to Global
+program and has set up an engagement structure
+                                                                  Settlement.
+that will ensure market participants can be as
+involved in helping to shape the final procedures
+and systems as they wish to be, or as their                       Further information
+resources allow (see table below).
+                                                                  For any further enquiries, please contact AEMO’s
+AEMO is cognisant of resource constraints on
+                                                                  5MS team at 5ms@aemo.com.au.
+smaller participants, and the interactions between
+
+5-Minute Settlement and Global Settlement engagement structure
+
+ Engagement method                                Purpose
+ Forums, working groups, and focus groups         Program co-ordination, information-sharing, procedure and system development
+
+ One-on-one meetings                              In-depth and confidential discussions with participants
+
+ Information sessions                             General information on the program, open to all
+
+ Targeted briefing sessions                       Subject-specific briefings
+
+ Email updates                                    Fortnightly information on current events
+
+ Website                                          General program information repository
+
+
+
+
+© AEMO 2020 | Factsheet: What is Global Settlement?                                                                              2
+

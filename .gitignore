@@ -5,9 +5,11 @@
 __pycache__/
 *.pyc
 
-# downloaded/derived doc artifacts
+# downloaded/derived doc artifacts (but keep the bundled AEMO source docs)
 *.pdf
 *.txt
+!spot-price-demo/docs/aemo-source/pdf/*.pdf
+!spot-price-demo/docs/aemo-source/text/*.txt
 
 # os
 .DS_Store
