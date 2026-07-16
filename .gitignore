@@ -1,0 +1,13 @@
+# local per-workspace config (copy of config.example.sh)
+**/config.sh
+
+# python
+__pycache__/
+*.pyc
+
+# downloaded/derived doc artifacts
+*.pdf
+*.txt
+
+# os
+.DS_Store

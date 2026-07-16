@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "config": {
+    "sample_questions": [
+      { "id": "<32-hex-uuid>", "question": ["What's the current spot price in SA1?"] }
+    ]
+  },
+  "data_sources": {
+    "tables": [
+      { "identifier": "<catalog>.<schema>.nem_demand_5min" },
+      { "identifier": "<catalog>.<schema>.nem_generation_by_fuel" },
+      { "identifier": "<catalog>.<schema>.nem_prices_5min" }
+    ]
+  },
+  "instructions": {
+    "text_instructions": [
+      { "id": "<32-hex-uuid>", "content": ["Route real-time questions to get_live_nem_price; historical to the tables."] }
+    ],
+    "sql_functions": [
+      { "id": "<32-hex-uuid>", "identifier": "<catalog>.<schema>.get_live_nem_price" }
+    ]
+  }
+}
