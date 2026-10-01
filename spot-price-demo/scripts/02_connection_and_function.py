@@ -21,12 +21,13 @@ def main() -> None:
     sql = open(os.path.join(HERE, "02_connection_and_function.sql")).read()
     sql = sql.replace("{{CATALOG}}", c["catalog"]).replace("{{SCHEMA}}", c["schema"])
 
-    # split into the two runnable DDL statements (connection, function); the
-    # Statement Execution API runs one statement at a time.
-    conn_stmt = sql.split("-- STEP 2", 1)[0].split("CREATE CONNECTION", 1)[1]
-    conn_stmt = "CREATE CONNECTION" + conn_stmt.rsplit(";", 1)[0]
-    fn_stmt = sql.split("CREATE OR REPLACE FUNCTION", 1)[1]
-    fn_stmt = "CREATE OR REPLACE FUNCTION" + fn_stmt.split(";", 1)[0]
+    # Strip SQL line comments (some contain the words "CREATE CONNECTION"), then
+    # split on ';' into runnable statements; the Statement Execution API runs one
+    # statement at a time.
+    code = "\n".join(l for l in sql.splitlines() if not l.lstrip().startswith("--"))
+    stmts = [s.strip() for s in code.split(";") if s.strip()]
+    conn_stmt = next(s for s in stmts if s.upper().startswith("CREATE CONNECTION"))
+    fn_stmt = next(s for s in stmts if s.upper().startswith("CREATE OR REPLACE FUNCTION"))
 
     for label, stmt in (("connection", conn_stmt), ("function", fn_stmt)):
         r = run_sql(stmt, c, tok)
