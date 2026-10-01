@@ -1,0 +1,391 @@
+<title>NEM Trading Demo Runbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #f1f3f6;
+    --surface: #ffffff;
+    --surface-2: #f7f9fb;
+    --border: #dde3ea;
+    --border-strong: #c7d0db;
+    --ink: #161b24;
+    --ink-soft: #39434f;
+    --muted: #697585;
+    --accent: #0f6e68;        /* grid teal — brand / links */
+    --accent-soft: #e2efed;
+    --live: #c56a16;          /* real-time source */
+    --live-soft: #faeede;
+    --history: #2862a8;       /* historical tables */
+    --history-soft: #e6eef8;
+    --docs: #6b45b0;          /* unstructured docs */
+    --docs-soft: #efe9fa;
+    --shadow: 0 1px 2px rgba(20,27,38,.05), 0 8px 24px -16px rgba(20,27,38,.22);
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0d1017;
+      --surface: #141922;
+      --surface-2: #1a212c;
+      --border: #27303d;
+      --border-strong: #333e4d;
+      --ink: #e8edf3;
+      --ink-soft: #c2cbd6;
+      --muted: #8c99a9;
+      --accent: #43b3aa;
+      --accent-soft: #16302e;
+      --live: #e59a4c;
+      --live-soft: #35260f;
+      --history: #6ba1e3;
+      --history-soft: #142338;
+      --docs: #a988e0;
+      --docs-soft: #241a3a;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0d1017;
+    --surface: #141922;
+    --surface-2: #1a212c;
+    --border: #27303d;
+    --border-strong: #333e4d;
+    --ink: #e8edf3;
+    --ink-soft: #c2cbd6;
+    --muted: #8c99a9;
+    --accent: #43b3aa;
+    --accent-soft: #16302e;
+    --live: #e59a4c;
+    --live-soft: #35260f;
+    --history: #6ba1e3;
+    --history-soft: #142338;
+    --docs: #a988e0;
+    --docs-soft: #241a3a;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px -18px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* ---- Masthead ---- */
+  header.mast {
+    padding: 56px 0 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.08; font-weight: 700;
+    letter-spacing: -.02em; text-wrap: balance;
+    margin: 0 0 16px;
+  }
+  .standfirst {
+    font-size: 19px; line-height: 1.5; color: var(--ink-soft);
+    max-width: 60ch; margin: 0 0 26px; text-wrap: pretty;
+  }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 8px 10px;
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px;
+  }
+  .meta-row span {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 999px; padding: 5px 12px; color: var(--muted);
+  }
+  .meta-row span b { color: var(--ink-soft); font-weight: 600; }
+
+  /* ---- Three-source band ---- */
+  .thesis { margin: 40px 0; }
+  .sources {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  }
+  .src {
+    background: var(--surface); border: 1px solid var(--border);
+    border-top: 3px solid var(--c); border-radius: var(--radius);
+    padding: 18px 18px 20px; box-shadow: var(--shadow);
+  }
+  .src .tag {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--c);
+  }
+  .src h3 { margin: 7px 0 6px; font-size: 16px; font-weight: 600; }
+  .src p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+  .converge {
+    text-align: center; margin: 16px 0 0;
+    font-size: 14px; color: var(--ink-soft);
+  }
+  .converge b { color: var(--ink); font-weight: 600; }
+  .converge .arrow { color: var(--accent); font-weight: 600; }
+
+  /* ---- Sections ---- */
+  section { margin: 48px 0 0; }
+  h2 {
+    font-size: 13px; font-weight: 600;
+    font-family: "IBM Plex Mono", monospace;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 6px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  h2 .n { color: var(--muted); font-weight: 500; }
+  .lead { font-size: 17px; color: var(--ink-soft); margin: 18px 0 22px; max-width: 62ch; }
+  p { margin: 0 0 16px; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+
+  /* ---- Spec table ---- */
+  .table-scroll { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; background: var(--surface); }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+    background: var(--surface-2);
+  }
+  tr:last-child td { border-bottom: none; }
+  td.k { font-weight: 600; white-space: nowrap; }
+  code, .mono { font-family: "IBM Plex Mono", monospace; font-size: .9em; }
+  td code { background: var(--surface-2); border: 1px solid var(--border); padding: 1px 6px; border-radius: 5px; color: var(--ink-soft); }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---- Flow steps ---- */
+  ol.flow { list-style: none; counter-reset: s; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  ol.flow li {
+    counter-increment: s; position: relative;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 14px 18px 14px 56px; box-shadow: var(--shadow);
+  }
+  ol.flow li::before {
+    content: counter(s); position: absolute; left: 14px; top: 13px;
+    width: 28px; height: 28px; border-radius: 7px;
+    background: var(--accent-soft); color: var(--accent);
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 14px;
+    display: grid; place-items: center;
+  }
+  ol.flow li b { font-weight: 600; }
+  ol.flow li .d { color: var(--muted); font-size: 14px; }
+
+  /* ---- Chips ---- */
+  .chip {
+    display: inline-block; font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 999px; vertical-align: middle;
+  }
+  .chip.live { background: var(--live-soft); color: var(--live); }
+  .chip.history { background: var(--history-soft); color: var(--history); }
+  .chip.docs { background: var(--docs-soft); color: var(--docs); }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; align-items: center; }
+  .legend .lab { font-size: 13px; color: var(--muted); margin-right: 2px; }
+
+  /* ---- Question cards ---- */
+  .qgroup { margin: 0 0 24px; }
+  .qgroup > h3 {
+    font-size: 15px; font-weight: 600; margin: 0 0 4px;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .qgroup > .sub { font-size: 13.5px; color: var(--muted); margin: 0 0 12px; }
+  ul.q { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  ul.q li {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--qc, var(--border-strong));
+    border-radius: 8px; padding: 12px 15px; font-size: 14.5px; line-height: 1.5;
+  }
+  ul.q li .tags { display: inline-flex; gap: 5px; margin-right: 8px; }
+  ul.q.hero li { border-left-width: 3px; background: linear-gradient(180deg, var(--accent-soft), var(--surface)); border-color: var(--border-strong); }
+
+  /* ---- Callouts ---- */
+  .note {
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent); border-radius: 8px;
+    padding: 14px 18px; margin: 0 0 16px; font-size: 14.5px; color: var(--ink-soft);
+  }
+  .note.warn { border-left-color: var(--live); }
+  .note b { color: var(--ink); }
+  ul.plain { padding-left: 20px; margin: 0 0 16px; }
+  ul.plain li { margin: 0 0 8px; }
+
+  .footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  .footer code { font-size: 12px; }
+
+  @media (max-width: 620px) {
+    .sources { grid-template-columns: 1fr; }
+    .wrap { padding: 0 18px 72px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">Databricks One · Genie Demo Runbook</p>
+    <h1>NEM Trading Intelligence</h1>
+    <p class="standfirst">One Genie agent answers across three live source types — governed tables, a real-time API call, and unstructured AEMO reports — with no vector store and nothing pre-ingested. This is the run sheet: what it shows, how it's wired, and the questions that make it land.</p>
+    <div class="meta-row">
+      <span>Workspace <b>fevm-serverless-stable-2b9lj3</b></span>
+      <span>Space ID <b>01f1bd91…04b</b></span>
+      <span>Owner <b>sourabh.ghose</b></span>
+      <span>Audience <b>#anz-fe-energyutilities</b></span>
+    </div>
+  </header>
+
+  <div class="thesis">
+    <div class="sources">
+      <div class="src" style="--c:var(--live)">
+        <div class="tag">Live · real-time</div>
+        <h3>Current spot price</h3>
+        <p>A UC function calls the AEMO API at query time — the live price &amp; demand, fetched, never stored.</p>
+      </div>
+      <div class="src" style="--c:var(--history)">
+        <div class="tag">History · tables</div>
+        <h3>14 days of 5-min data</h3>
+        <p>Prices, demand and generation-by-fuel across the 5 NEM regions, queried by the Genie agent.</p>
+      </div>
+      <div class="src" style="--c:var(--docs)">
+        <div class="tag">Docs · unstructured</div>
+        <h3>AEMO reports</h3>
+        <p>Real AEMO QED &amp; fact sheets, read live from Google Drive — no ingestion, no RAG index.</p>
+      </div>
+    </div>
+    <p class="converge">Three sources <span class="arrow">→</span> <b>one agent</b> that routes each question to the right place and reconciles the answers.</p>
+  </div>
+
+  <section>
+    <h2><span class="n">01</span> What we're demonstrating</h2>
+    <p class="lead">The hero idea: <b>governed, real-time, multi-source intelligence without a pipeline for every question.</b> A trader or analyst asks in plain language; the agent decides whether the answer lives in the live market, in our history, or in AEMO's own analysis — and when a question needs all three, it fetches and reconciles them in one turn.</p>
+    <ul class="plain">
+      <li><span class="chip live">live</span> &nbsp;<b>"Right now"</b> questions hit a Unity Catalog function that calls AEMO at query time — the price is fetched, not ingested.</li>
+      <li><span class="chip history">history</span> &nbsp;<b>Trends, spikes, averages, fuel mix</b> route to governed UC tables.</li>
+      <li><span class="chip docs">docs</span> &nbsp;<b>"Why / what does AEMO say"</b> reads the AEMO reports live from Drive.</li>
+    </ul>
+    <p>The governance story is the subtext throughout: every query runs as the <b>asking user's own identity</b>, through UC permissions and lineage, with in-region Claude. Nothing is copied into a side store.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">02</span> How it's set up</h2>
+    <p class="lead">Everything lives in one schema plus one metastore connection. Built from <code>github.com/sourabhghose/genie-one-for-energy</code> (<code>spot-price-demo/</code>) via four scripts: data → connection+function → agent → smoke test.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Component</th><th>Identifier</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Genie agent</td><td><code>ANZ NEM Trading Intelligence</code><br><code>01f1bd919d35117d8be26285e3fe904b</code></td><td>The space. Tables + live function attached as a SQL-function tool + routing instructions + 12 sample questions.</td></tr>
+          <tr><td class="k">Schema</td><td><code>serverless_stable_2b9lj3_catalog<br>.nem_trading_demo</code></td><td>Home for all demo objects.</td></tr>
+          <tr><td class="k">Prices table</td><td><code>nem_prices_5min</code></td><td class="num">20,160 rows — 14 days of 5-min regional spot prices (RRP $/MWh), with spike flags.</td></tr>
+          <tr><td class="k">Demand table</td><td><code>nem_demand_5min</code></td><td class="num">20,160 rows — 5-min operational demand (MW) per region.</td></tr>
+          <tr><td class="k">Generation table</td><td><code>nem_generation_by_fuel</code></td><td class="num">60,480 rows — output by fuel type (coal, gas, hydro, wind, solar, battery).</td></tr>
+          <tr><td class="k">Live function</td><td><code>get_live_nem_price(region)</code></td><td>Table-valued UC function → <code>aemo_live</code> HTTP connection → AEMO <code>ELEC_NEM_SUMMARY</code>. Returns the current price &amp; demand at call time.</td></tr>
+          <tr><td class="k">Connection</td><td><code>aemo_live</code></td><td>Metastore HTTP connection to the public AEMO visualisations API (<code>bearer_token 'none'</code>, no auth).</td></tr>
+          <tr><td class="k">Docs</td><td>4 Google Docs (Drive folder <code>1RimOmv…a2BTU</code>)</td><td>AEMO QED Q1 2026, QED Q4 2025, NEM Fact Sheet, Global Settlement Fact Sheet.</td></tr>
+          <tr><td class="k">Regions</td><td class="mono">NSW1 · QLD1 · VIC1 · SA1 · TAS1</td><td>Pass the AEMO region id to the live function (one region per call).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">The three structured legs are complete and verified end-to-end. The docs leg is wired through OneChat's Google Drive connector rather than ingested — which is the point of the demo.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">03</span> Access — two separate systems</h2>
+    <p class="lead">Giving someone the Genie space does <b>not</b> give them the Drive docs, and vice versa. The two legs are governed independently.</p>
+
+    <h3 style="font-size:15px;margin:0 0 10px;"><span class="chip history">databricks</span> &nbsp;Genie + UC (live + history)</h3>
+    <p>Genie runs queries as the <b>asking user's identity</b>, so each person needs the data grants themselves — space <code>CAN_RUN</code>, <code>USE CATALOG</code>/<code>USE SCHEMA</code>, <code>SELECT</code> on the tables, <code>USE CONNECTION</code> on <code>aemo_live</code>, <code>EXECUTE</code> on the function, and warehouse <code>CAN_USE</code>. Granted to the four non-owner members of <code>#anz-fe-energyutilities</code>:</p>
+    <ul class="plain">
+      <li><span class="mono">zivile.norkunaite</span>, <span class="mono">nauman.shah</span>, <span class="mono">allan.leung</span>, <span class="mono">beyza.yalavac</span> &nbsp;— all four fully provisioned. ✓</li>
+    </ul>
+
+    <h3 style="font-size:15px;margin:22px 0 10px;"><span class="chip docs">google drive</span> &nbsp;Docs (per-user OAuth)</h3>
+    <p>The Drive connector reads as <b>each user's own Google identity</b> — it never proxies the owner's access. So each person must, once:</p>
+    <ol class="flow">
+      <li><b>Have the folder shared to them</b> <span class="d">— done; folder is shared with the team.</span></li>
+      <li><b>Connect Google Drive in OneChat</b> <span class="d">— add the Google Drive source and complete the per-user OAuth with the same <code>@databricks.com</code> Google account the folder was shared to.</span></li>
+    </ol>
+    <p class="note warn"><b>Gotchas:</b> the Drive connector is Beta/preview-gated — if someone doesn't see the option, it's a workspace enablement, not self-serve. Docs must be <b>Google-native</b> (ours are Google Docs; PDFs won't read). And the OAuth account must match the one the folder was shared to.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">04</span> Running the demo — sample questions</h2>
+    <p class="lead">Grouped by how many sources each exercises. Build from one source to three — the three-source reconciliation is the moment that sells it.</p>
+    <div class="legend">
+      <span class="lab">Sources touched:</span>
+      <span class="chip live">live</span>
+      <span class="chip history">history</span>
+      <span class="chip docs">docs</span>
+    </div>
+
+    <div class="qgroup">
+      <h3>Warm-up — single source</h3>
+      <p class="sub">Prove each leg works on its own.</p>
+      <ul class="q">
+        <li style="--qc:var(--live)"><span class="tags"><span class="chip live">live</span></span>"What's the current spot price in SA1?"</li>
+        <li style="--qc:var(--history)"><span class="tags"><span class="chip history">history</span></span>"Show the top 5 price spikes in NSW1 this week."</li>
+        <li style="--qc:var(--docs)"><span class="tags"><span class="chip docs">docs</span></span>"Per the AEMO QED Q1 2026 report, what drove wholesale prices and what share did batteries set?"</li>
+      </ul>
+    </div>
+
+    <div class="qgroup">
+      <h3>Two sources — live vs. history</h3>
+      <p class="sub">The "two tools, one agent" moment — the agent calls the live API and the tables in a single answer.</p>
+      <ul class="q">
+        <li style="--qc:var(--history)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span></span>"Is SA1's live spot price above or below its 7-day average?"</li>
+        <li style="--qc:var(--history)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span></span>"Which region has the biggest gap between its live price right now and its 14-day average?"</li>
+        <li style="--qc:var(--history)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span></span>"Is current demand in VIC1 higher than its typical demand over the last two weeks?"</li>
+      </ul>
+    </div>
+
+    <div class="qgroup">
+      <h3>Three sources — live + history + docs</h3>
+      <p class="sub">Grounded in real figures from your docs: renewables hit a <b>46.5%</b> Q1 high, batteries set prices in <b>32%</b> of intervals, and SA was the <b>only</b> region with a year-on-year price rise. Ask these in <b>OneChat</b>.</p>
+      <ul class="q">
+        <li style="--qc:var(--docs)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span><span class="chip docs">docs</span></span>"AEMO's QED Q1 2026 says South Australia was the only NEM region with a year-on-year wholesale price increase. What's the live SA1 price right now, how does it compare to SA1's 14-day average in our data, and does our trend line up with what AEMO says is driving SA prices?"</li>
+        <li style="--qc:var(--docs)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span><span class="chip docs">docs</span></span>"The QED report says battery charge and discharge set prices in 32% of intervals, displacing hydro. Does our own generation and price data show batteries shaping prices this week — and what's the live VIC1 price now?"</li>
+        <li style="--qc:var(--docs)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span><span class="chip docs">docs</span></span>"AEMO reports renewables hit a record 46.5% of generation in Q1 2026. What's the wind + solar share in our data this week, is the live price low right now as we'd expect, and how does that track the report's narrative?"</li>
+      </ul>
+    </div>
+
+    <div class="qgroup">
+      <h3>Causal — "why did this happen"</h3>
+      <p class="sub">Highest-variance, highest-impact. The agent reliably fetches all sources; the narrative quality depends on the model, so rehearse phrasing.</p>
+      <ul class="q">
+        <li style="--qc:var(--docs)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span><span class="chip docs">docs</span></span>"We saw negative midday prices in SA1 this week. The QED report attributes daytime lows to solar and battery charging — why did it go negative, does our fuel-mix data confirm it, and what's the live SA1 price now that we're past midday?"</li>
+        <li style="--qc:var(--docs)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span><span class="chip docs">docs</span></span>"There was a price spike in NSW1 this week. Using the NEM Fact Sheet on how spot prices are set plus the QED price-driver analysis, explain what most likely caused it from our demand and generation data, and tell me whether the live NSW1 price is near that level now."</li>
+      </ul>
+    </div>
+
+    <div class="qgroup">
+      <h3>The hero question</h3>
+      <p class="sub">All three sources, plus causal reconciliation, in one turn. Close with this.</p>
+      <ul class="q hero">
+        <li style="--qc:var(--accent)"><span class="tags"><span class="chip live">live</span><span class="chip history">history</span><span class="chip docs">docs</span></span>"Right now the live SA1 price is one thing, our 14-day data shows another trend, and AEMO's QED Q1 2026 report tells a third story about what's driving SA prices. Reconcile all three: is the current market behaving the way the historical data and AEMO's analysis would predict — and if not, why?"</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">05</span> Presenter notes &amp; gotchas</h2>
+    <ul class="plain">
+      <li><b>Three-source questions only land in OneChat</b> — it combines the Genie agent (live + history) with the Drive docs. The bare Genie space handles live + history only.</li>
+      <li><b>OneChat auto-routes</b> across every agent you can access — there's no pre-question picker. If a question lands on the wrong agent, use the <b>"Choose another space"</b> control to pin <b>ANZ NEM Trading Intelligence</b>.</li>
+      <li><b>The live function is single-region per call.</b> Keep "right now" questions to one region (NSW1 / QLD1 / VIC1 / SA1 / TAS1); multi-region live asks may only return one unless the agent iterates.</li>
+      <li><b>Lead the governance point:</b> the live price is <em>fetched, not stored</em>, and every query runs as the asking user's own identity under UC permissions.</li>
+      <li><b>Rehearse the "why" questions</b> — they're the highest-variance part of the demo.</li>
+    </ul>
+  </section>
+
+  <div class="footer">
+    <p>Open the agent: <code>fevm-serverless-stable-2b9lj3.cloud.databricks.com/genie/rooms/01f1bd919d35117d8be26285e3fe904b</code><br>
+    Repo: <code>github.com/sourabhghose/genie-one-for-energy</code> · <code>spot-price-demo/</code> &nbsp;·&nbsp; Synthetic market data; live prices via the public AEMO API.</p>
+  </div>
+</div>
